@@ -1,8 +1,36 @@
-version: '3'
+# version: '3'
+# services:
+#   echo-server:
+#     image: ealen/echo-server:latest
+#     environment:
+#       - ENABLE__ENVIRONMENT=false
+#     ports:
+#       - 3000:80
+
+version: "3.9"
+
 services:
-  echo-server:
-    image: ealen/echo-server:latest
-    environment:
-      - ENABLE__ENVIRONMENT=false
-    ports:
-      - 3000:80
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins-server
+    privileged: true
+    hostname: jenkinsserver
+    user: root
+    labels:
+      com.example.description: "Jenkins-Server by DigitalAvenue.dev"
+    ports: 
+      - "8080:8080"
+      - "50000:50000"
+    networks:
+      jenkins-net:
+        aliases: 
+          - jenkins-net
+    volumes: 
+     - jenkins-data:/var/jenkins_home
+     - /var/run/docker.sock:/var/run/docker.sock
+     
+volumes: 
+  jenkins-data:
+
+networks:
+  jenkins-net:

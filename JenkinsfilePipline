@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Start') {
+            steps {
+                echo 'Getting Start.....'
+            }
+        }
+        stage ('Clone') {
+            steps {
+               git branch: 'main', url: 'https://github.com/tahirghoori/kafka-topic-test.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh './mvnw clean install'
+            }
+        }
+    }
+}
